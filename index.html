@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ColorJoy Kids | Daily Coloring Fun</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fffaf3;
+      color: #34334a;
+    }
+    header {
+      background: #fff;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .logo { font-size: 25px; font-weight: bold; color: #8b55d9; }
+    nav a { margin: 0 10px; color: #444; text-decoration: none; }
+    .hero {
+      text-align: center;
+      background: #f0e8ff;
+      padding: 55px 20px;
+    }
+    h1 { font-size: clamp(30px, 5vw, 48px); margin: 0 0 12px; }
+    .hero p { font-size: 18px; }
+    .btn {
+      background: #8054d9;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 13px 22px;
+      cursor: pointer;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-block;
+      margin: 6px;
+    }
+    .btn.secondary { background: #ee7c50; }
+    section { max-width: 1000px; margin: 35px auto; padding: 20px; }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 4px 18px #00000012;
+      text-align: center;
+    }
+    .palette {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .color {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 1px #aaa;
+      cursor: pointer;
+    }
+    .color.selected { outline: 3px solid #34334a; }
+    #artwork {
+      display: block;
+      width: 100%;
+      max-width: 520px;
+      margin: 15px auto;
+      background: white;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      touch-action: none;
+      cursor: crosshair;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+    footer { text-align: center; padding: 30px; background: #f0e8ff; }
+    @media print {
+      header, .hero, .palette, .controls, .features,
+      footer, h2, .instructions { display: none !important; }
+      body { background: white; }
+      section, .card { margin: 0; padding: 0; box-shadow: none; }
+      #artwork { max-width: 100%; border: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🎨 ColorJoy Kids</div>
+    <nav>
+      <a href="#today">Today's Challenge</a>
+      <a href="#activities">Activities</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Little Hands, Big Imagination! 🌈</h1>
+    <p>Discover a new coloring adventure every day.</p>
+    <a class="btn" href="#today">Start Coloring</a>
+  </div>
+
+  <section id="today">
+    <div class="card">
+      <h2>🌟 Today's Coloring Challenge</h2>
+      <p id="date"></p>
+      <h3 id="challenge"></h3>
+      <p class="instructions">
+        Choose a color and draw on the picture.
+        You can also print a blank copy!
+      </p>
+
+      <canvas id="artwork" width="600" height="600"
+        aria-label="Interactive coloring canvas"></canvas>
+
+      <div class="palette" id="palette"></div>
+
+      <div class="controls">
+        <button class="btn" onclick="resetArt()">Start Again</button>
+        <button class="btn secondary" onclick="downloadArt()">
+          Save My Artwork
+        </button>
+        <button class="btn" onclick="printBlank()">Print Blank Page</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="activities">
+    <h2 style="text-align:center">More Fun Coming Soon!</h2>
+    <div class="features">
+      <div class="card">
+        <h2>🐾 Animals</h2>
+        <p>Discover adorable animal coloring pages.</p>
+      </div>
+      <div class="card">
+        <h2>🔤 Letters & Numbers</h2>
+        <p>Learn while having creative fun.</p>
+      </div>
+      <div class="card">
+        <h2>🖨️ Printables</h2>
+        <p>Enjoy coloring activities on paper.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> ColorJoy Kids.
+    Made for little artists everywhere.
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("artwork");
+    const ctx = canvas.getContext("2d");
+    const colors = [
+      "#f44336", "#ff9800", "#ffeb3b", "#4caf50",
+      "#2196f3", "#9c27b0", "#e91e63", "#795548",
+      "#000000", "#ffffff"
+    ];
+    let selectedColor = colors[0];
+    let drawing = false;
+
+    const palette = document.getElementById("palette");
+    colors.forEach((color, index) => {
+      const button = document.createElement("button");
+      button.className = "color" + (index === 0 ? " selected" : "");
+      button.style.background = color;
+      button.setAttribute("aria-label", "Select color " + color);
+      button.onclick = () => {
+        selectedColor = color;
+        document.querySelectorAll(".color").forEach(
+          item => item.classList.remove("selected")
+        );
+        button.classList.add("selected");
+      };
+      palette.appendChild(button);
+    });
+
+    const challenges = [
+      { name: "Happy Sunshine ☀️", type: "sun" },
+      { name: "Beautiful Flower 🌸", type: "flower" },
+      { name: "Lovely House 🏠", type: "house" }
+    ];
+
+    const now = new Date();
+    const dayNumber = Math.floor(
+      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+      / 86400000
+    );
+    const challenge = challenges[dayNumber % challenges.length];
+
+    document.getElementById("date").textContent =
+      now.toLocaleDateString("en-US", {
+        weekday: "long", year: "numeric",
+        month: "long", day: "numeric"
+      });
+    document.getElementById("challenge").textContent = challenge.name;
+    document.getElementById("year").textContent = now.getFullYear();
+
+    function line(points, close = false) {
+      ctx.beginPath();
+      ctx.moveTo(points[0][0], points[0][1]);
+      points.slice(1).forEach(p => ctx.lineTo(p[0], p[1]));
+      if (close) ctx.closePath();
+      ctx.stroke();
+    }
+
+    function circle(x, y, r) {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    function drawOutline() {
+      ctx.strokeStyle = "#222";
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+
+      if (challenge.type === "sun") {
+        circle(300, 300, 110);
+        for (let i = 0; i < 12; i++) {
+          const a = i * Math.PI / 6;
+          line([
+            [300 + Math.cos(a) * 145, 300 + Math.sin(a) * 145],
+            [300 + Math.cos(a) * 205, 300 + Math.sin(a) * 205]
+          ]);
+        }
+        circle(265, 280, 8);
+        circle(335, 280, 8);
+        ctx.beginPath();
+        ctx.arc(300, 305, 45, 0.15, Math.PI - 0.15);
+        ctx.stroke();
+      } else if (challenge.type === "flower") {
+        for (let i = 0; i < 8; i++) {
+          const a = i * Math.PI / 4;
+          circle(300 + Math.cos(a) * 75,
+                 245 + Math.sin(a) * 75, 55);
+        }
+        circle(300, 245, 55);
+        line([[300, 300], [300, 510]]);
+        line([[300, 415], [230, 365], [255, 435], [300, 455]]);
+        line([[300, 455], [370, 390], [355, 470], [300, 490]]);
+      } else {
+        line([[120, 275], [300, 110], [480, 275]], true);
+        line([[155, 275], [155, 500], [445, 500], [445, 275]]);
+        line([[265, 500], [265, 365], [345, 365], [345, 500]]);
+        line([[185, 310], [240, 310], [240, 365], [185, 365]], true);
+        line([[365, 310], [415, 310], [415, 365], [365, 365]], true);
+      }
+    }
+
+    function resetArt() {
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      drawOutline();
+    }
+
+    function position(event) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: (event.clientX - rect.left) * canvas.width / rect.width,
+        y: (event.clientY - rect.top) * canvas.height / rect.height
+      };
+    }
+
+    canvas.addEventListener("pointerdown", event => {
+      drawing = true;
+      canvas.setPointerCapture(event.pointerId);
+      const p = position(event);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    });
+
+    canvas.addEventListener("pointermove", event => {
+      if (!drawing) return;
+      const p = position(event);
+      ctx.strokeStyle = selectedColor;
+      ctx.lineWidth = 18;
+      ctx.lineCap = "round";
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    });
+
+    canvas.addEventListener("pointerup", () => drawing = false);
+    canvas.addEventListener("pointercancel", () => drawing = false);
+
+    function downloadArt() {
+      const link = document.createElement("a");
+      link.download = "colorjoy-kids-artwork.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    function printBlank() {
+      const saved = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      resetArt();
+      window.print();
+      ctx.putImageData(saved, 0, 0);
+    }
+
+    resetArt();
+  </script>
+</body>
+</html>
