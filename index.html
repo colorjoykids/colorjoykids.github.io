@@ -4,770 +4,540 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ColorJoy Kids | Fun Daily Coloring</title>
-
+<title>ColorJoy Kids | Daily Coloring Fun</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #fffaf5;
-  color: #343047;
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fffaf5;color:#343047}
+header{background:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:26px;font-weight:bold;color:#8052ce}
+nav a{margin:8px;color:#504768;text-decoration:none;font-weight:bold}
+.hero{background:linear-gradient(135deg,#efe3ff,#ffe8d7);padding:60px 20px;text-align:center}
+.hero h1{font-size:clamp(30px,5vw,48px);margin:0 0 15px}
+.hero p{font-size:18px;line-height:1.6}
+section{max-width:1100px;margin:35px auto;padding:15px}
+h2{color:#7045b9}
+.card{background:white;border-radius:22px;padding:25px;box-shadow:0 4px 20px #00000010;text-align:center}
+button,.btn{border:0;border-radius:25px;padding:12px 19px;background:#8052ce;color:white;font-weight:bold;font-size:14px;cursor:pointer;margin:5px;text-decoration:none;display:inline-block}
+button:hover,.btn:hover{filter:brightness(.93)}
+button.active{background:#ed754e}
+button:focus-visible,a:focus-visible{outline:3px solid #222;outline-offset:3px}
+.green{background:#359b78}
+.orange{background:#eb8357}
+.gray{background:#697386}
+.toolbar,.actions,.palette{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:15px auto}
+.color{width:42px;height:42px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #aaa;padding:0;margin:4px}
+.color.selected{outline:3px solid #343047;outline-offset:2px}
+#artwork{width:100%;max-width:550px;display:block;margin:20px auto;border:2px solid #e6dff0;border-radius:15px;background:white;touch-action:none;cursor:crosshair}
+.categories{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:20px 0}
+.categories button{background:#eee4fa;color:#54378b}
+.categories button.active{background:#8052ce;color:white}
+.library{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
+.picture{background:white;border:2px solid #eee;border-radius:18px;padding:15px;text-align:center}
+.picture svg{width:100%;height:145px;background:#fff;pointer-events:none}
+.picture h3{margin:10px 0}
+.picture button{margin-top:5px}
+.small{color:#6b6476;font-size:14px}
+footer{text-align:center;background:#eee3fa;padding:30px;margin-top:50px}
+@media(max-width:600px){
+header{justify-content:center;text-align:center}
+.card{padding:12px}
+button{padding:11px 13px;font-size:13px}
 }
-
-header {
-  background: white;
-  padding: 20px 6%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 15px;
-  box-shadow: 0 2px 10px #0000000a;
-}
-
-.logo {
-  color: #8052ce;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-nav a {
-  margin-left: 15px;
-  text-decoration: none;
-  color: #504768;
-  font-weight: bold;
-}
-
-.hero {
-  background: linear-gradient(135deg, #f0e4ff, #ffe9d8);
-  text-align: center;
-  padding: 65px 20px;
-}
-
-.hero h1 {
-  font-size: clamp(30px, 5vw, 48px);
-  margin: 0 0 15px;
-}
-
-.hero p {
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-button, .btn {
-  border: none;
-  border-radius: 25px;
-  padding: 13px 20px;
-  background: #8052ce;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 5px;
-  text-decoration: none;
-  display: inline-block;
-}
-
-button:hover, .btn:hover {
-  filter: brightness(0.93);
-}
-
-button.active {
-  background: #ec754e;
-}
-
-section {
-  max-width: 1100px;
-  margin: 35px auto;
-  padding: 15px;
-}
-
-.card {
-  background: white;
-  border-radius: 22px;
-  padding: 25px;
-  box-shadow: 0 5px 25px #0000000c;
-  text-align: center;
-}
-
-h2 { color: #6d46b1; }
-
-.subtitle { color: #666; }
-
-.toolbar {
-  margin: 18px auto;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 5px;
-}
-
-.palette {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-.color {
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  border: 3px solid white;
-  box-shadow: 0 0 0 1px #aaa;
-  padding: 0;
-  margin: 0;
-}
-
-.color.selected {
-  outline: 3px solid #343047;
-  outline-offset: 2px;
-}
-
-#artwork {
-  width: 100%;
-  max-width: 550px;
-  height: auto;
-  background: white;
-  border: 2px solid #e6dff0;
-  border-radius: 15px;
-  display: block;
-  margin: 20px auto;
-  cursor: crosshair;
-  touch-action: none;
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.orange { background: #ed8259; }
-.green { background: #3b9b78; }
-.gray { background: #6b7280; }
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 20px;
-}
-
-.feature {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 4px 15px #0000000a;
-}
-
-.feature .emoji { font-size: 45px; }
-
-footer {
-  background: #eee3fa;
-  text-align: center;
-  padding: 30px;
-  margin-top: 50px;
-}
-
-@media (max-width: 600px) {
-  header { justify-content: center; }
-  nav a { margin: 0 7px; font-size: 13px; }
-  .card { padding: 15px; }
-  button { font-size: 13px; padding: 11px 14px; }
-}
-
-@media print {
-  header, .hero, .toolbar, .palette,
-  .actions, .features, footer,
-  .instructions, .subtitle, h2, h3,
-  #date, #activities { display: none !important; }
-
-  body { background: white; }
-  section, .card {
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-  }
-  #artwork {
-    max-width: 100%;
-    border: none;
-  }
+@media print{
+header,.hero,#librarySection,footer,.toolbar,.palette,.actions,
+.instructions,#date,#challengeName,.small,h2{display:none!important}
+body,section,.card{margin:0;padding:0;background:white;box-shadow:none}
+#artwork{border:0;max-width:100%;width:180mm}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">🎨 ColorJoy Kids</div>
-  <nav>
-    <a href="#today">Today's Challenge</a>
-    <a href="#activities">Activities</a>
-  </nav>
+<div class="logo">🎨 ColorJoy Kids</div>
+<nav>
+<a href="#today">Daily Challenge</a>
+<a href="#librarySection">Coloring Library</a>
+</nav>
 </header>
 
 <div class="hero">
-  <h1>Little Hands, Big Imagination! 🌈</h1>
-  <p>
-    Welcome to ColorJoy Kids!<br>
-    A happy place to color, create, and learn every day.
-  </p>
-  <a class="btn" href="#today">🎨 Start Coloring</a>
+<h1>Little Hands, Big Imagination! 🌈</h1>
+<p>Color, create, learn and smile every day!</p>
+<a href="#today" class="btn">Today's Challenge</a>
+<a href="#librarySection" class="btn orange">Explore Pictures</a>
 </div>
 
 <section id="today">
-  <div class="card">
+<div class="card">
+<h2>🌟 Let's Color!</h2>
+<p id="date"></p>
+<h3 id="challengeName"></h3>
+<p class="instructions">Choose a color and tap a shape, or use the brush to paint.</p>
 
-    <h2>🌟 Today's Coloring Challenge</h2>
-    <p id="date"></p>
-    <h3 id="challengeName"></h3>
+<div class="toolbar">
+<button id="fillBtn" class="active" onclick="setTool('fill')">🪣 Tap to Fill</button>
+<button id="brushBtn" onclick="setTool('brush')">🖌️ Brush</button>
+<button id="eraserBtn" onclick="setTool('eraser')">🧽 Eraser</button>
+</div>
 
-    <p class="instructions">
-      Choose your favorite color, then tap a shape
-      to fill it or use the brush to paint!
-    </p>
+<div id="palette" class="palette"></div>
+<canvas id="artwork" width="600" height="600" aria-label="Interactive coloring picture"></canvas>
 
-    <div class="toolbar">
-      <button id="fillBtn" class="active"
-        onclick="setTool('fill')">
-        🪣 Tap to Fill
-      </button>
-
-      <button id="brushBtn"
-        onclick="setTool('brush')">
-        🖌️ Brush
-      </button>
-
-      <button id="eraserBtn"
-        onclick="setTool('eraser')">
-        🧽 Eraser
-      </button>
-    </div>
-
-    <p class="subtitle">Choose a color:</p>
-
-    <div class="palette" id="palette"></div>
-
-    <canvas
-      id="artwork"
-      width="600"
-      height="600"
-      aria-label="Coloring picture">
-    </canvas>
-
-    <div class="actions">
-      <button class="gray" onclick="undo()">
-        ↩ Undo
-      </button>
-
-      <button class="orange" onclick="resetArt()">
-        🔄 Start Again
-      </button>
-
-      <button class="green" onclick="saveArt()">
-        💾 Save Artwork
-      </button>
-
-      <button onclick="printBlank()">
-        🖨️ Print Blank Page
-      </button>
-    </div>
-
-    <p class="subtitle">
-      New coloring activities appear every day!
-    </p>
-
-  </div>
+<div class="actions">
+<button class="gray" onclick="undo()">↩ Undo</button>
+<button class="orange" onclick="resetArt()">🔄 Start Again</button>
+<button class="green" onclick="saveArt()">💾 Save Artwork</button>
+<button onclick="printBlank()">🖨️ Print Blank</button>
+</div>
+<p class="small">Tip: Your artwork stays on this page until you change the picture or refresh. Download it to keep it!</p>
+</div>
 </section>
 
-<section id="activities">
-  <h2 style="text-align:center">
-    Explore More Coloring Adventures
-  </h2>
+<section id="librarySection">
+<h2 style="text-align:center">🎨 Explore Our Coloring Library</h2>
+<p style="text-align:center">Choose your favorite picture and start coloring!</p>
 
-  <div class="features">
-    <div class="feature">
-      <div class="emoji">🐻</div>
-      <h3>Animal Adventures</h3>
-      <p>Fun animal coloring pictures coming soon!</p>
-    </div>
+<div class="categories">
+<button class="active" onclick="filterLibrary('All',this)">All Pictures</button>
+<button onclick="filterLibrary('Animals',this)">🐾 Animals</button>
+<button onclick="filterLibrary('Learning',this)">🔤 Learning</button>
+<button onclick="filterLibrary('Nature',this)">🌻 Nature</button>
+<button onclick="filterLibrary('Adventures',this)">🚀 Adventures</button>
+</div>
 
-    <div class="feature">
-      <div class="emoji">🔤</div>
-      <h3>Letters & Numbers</h3>
-      <p>Color, play, and learn together.</p>
-    </div>
-
-    <div class="feature">
-      <div class="emoji">🌻</div>
-      <h3>Nature & Flowers</h3>
-      <p>Explore beautiful nature through colors.</p>
-    </div>
-
-    <div class="feature">
-      <div class="emoji">🖨️</div>
-      <h3>Printable Pages</h3>
-      <p>Print pictures and enjoy coloring on paper.</p>
-    </div>
-  </div>
+<div id="library" class="library"></div>
 </section>
 
 <footer>
-  <p>🎨 ColorJoy Kids</p>
-  <p>Making every day colorful and creative!</p>
-  <p>© <span id="year"></span> ColorJoy Kids</p>
+<h3>🎨 ColorJoy Kids</h3>
+<p>Making every day colorful and creative!</p>
+<p>© <span id="year"></span> ColorJoy Kids</p>
 </footer>
 
 <script>
-const canvas = document.getElementById("artwork");
-const ctx = canvas.getContext("2d", {
-  willReadFrequently: true
-});
+"use strict";
 
-let tool = "fill";
-let selectedColor = "#ff5252";
-let drawing = false;
-let history = [];
-let lastPoint = null;
+const canvas=document.getElementById("artwork");
+const ctx=canvas.getContext("2d");
+const W=600,H=600;
 
-const colors = [
-  "#ff5252", "#ff9800", "#ffeb3b",
-  "#4caf50", "#00bcd4", "#2196f3",
-  "#9c27b0", "#e91e63", "#795548",
-  "#000000", "#ffffff", "#b0bec5"
+const pictures=[
+{id:"cat",name:"Cute Cat",category:"Animals",emoji:"🐱"},
+{id:"bear",name:"Happy Bear",category:"Animals",emoji:"🐻"},
+{id:"fish",name:"Little Fish",category:"Animals",emoji:"🐟"},
+{id:"letter",name:"Letter A",category:"Learning",emoji:"🔤"},
+{id:"number",name:"Number 3",category:"Learning",emoji:"3️⃣"},
+{id:"shapes",name:"Fun Shapes",category:"Learning",emoji:"🔺"},
+{id:"sun",name:"Happy Sunshine",category:"Nature",emoji:"☀️"},
+{id:"flower",name:"Beautiful Flower",category:"Nature",emoji:"🌸"},
+{id:"tree",name:"Friendly Tree",category:"Nature",emoji:"🌳"},
+{id:"house",name:"Lovely House",category:"Adventures",emoji:"🏠"},
+{id:"rocket",name:"Space Rocket",category:"Adventures",emoji:"🚀"},
+{id:"car",name:"Happy Car",category:"Adventures",emoji:"🚗"}
 ];
 
-const palette = document.getElementById("palette");
+const colors=[
+"#ff5252","#ff9800","#ffeb3b","#4caf50",
+"#00bcd4","#2196f3","#9c27b0","#e91e63",
+"#795548","#000000","#ffffff","#b0bec5"
+];
 
-colors.forEach((color, index) => {
-  const button = document.createElement("button");
+let selectedColor=colors[0];
+let tool="fill";
+let regions=[];
+let fills={};
+let strokes=[];
+let history=[];
+let drawing=false;
+let activeStroke=null;
 
-  button.className =
-    "color" + (index === 0 ? " selected" : "");
+const now=new Date();
+const day=Math.floor(Date.UTC(
+now.getFullYear(),now.getMonth(),now.getDate()
+)/86400000);
 
-  button.style.background = color;
-  button.setAttribute("aria-label", "Choose " + color);
+const daily=pictures[((day%pictures.length)+pictures.length)%pictures.length];
+let current=daily;
 
-  button.onclick = () => {
-    selectedColor = color;
+document.getElementById("date").textContent=
+"Daily challenge • "+now.toLocaleDateString("en-US",{
+weekday:"long",year:"numeric",month:"long",day:"numeric"
+});
+document.getElementById("year").textContent=now.getFullYear();
 
-    document.querySelectorAll(".color").forEach(
-      item => item.classList.remove("selected")
-    );
-
-    button.classList.add("selected");
-  };
-
-  palette.appendChild(button);
+const palette=document.getElementById("palette");
+colors.forEach((color,i)=>{
+const b=document.createElement("button");
+b.className="color"+(i===0?" selected":"");
+b.style.background=color;
+b.setAttribute("aria-label","Choose color "+color);
+b.onclick=()=>{
+selectedColor=color;
+document.querySelectorAll(".color").forEach(x=>x.classList.remove("selected"));
+b.classList.add("selected");
+};
+palette.appendChild(b);
 });
 
-function setTool(newTool) {
-  tool = newTool;
-
-  ["fill", "brush", "eraser"].forEach(name => {
-    document.getElementById(name + "Btn")
-      .classList.toggle("active", name === newTool);
-  });
+function setTool(value){
+tool=value;
+["fill","brush","eraser"].forEach(t=>
+document.getElementById(t+"Btn").classList.toggle("active",t===value));
 }
 
-// Daily challenge rotation
-const challenges = [
-  { name: "Happy Sunshine ☀️", type: "sun" },
-  { name: "Beautiful Flower 🌸", type: "flower" },
-  { name: "Lovely House 🏠", type: "house" }
-];
+// Each shape has its own fillable path.
+function add(id,path){
+regions.push({id,path});
+}
 
-const today = new Date();
+function ellipse(id,x,y,rx,ry){
+const p=new Path2D();
+p.ellipse(x,y,rx,ry,0,0,Math.PI*2);
+add(id,p);
+}
 
-const dayNumber = Math.floor(
-  Date.UTC(
-    today.getFullYear(),
-    today.getMonth(),
-    today.getDate()
-  ) / 86400000
+function circle(id,x,y,r){
+ellipse(id,x,y,r,r);
+}
+
+function rect(id,x,y,w,h){
+const p=new Path2D();
+p.rect(x,y,w,h);
+add(id,p);
+}
+
+function poly(id,points){
+const p=new Path2D();
+p.moveTo(...points[0]);
+points.slice(1).forEach(pt=>p.lineTo(...pt));
+p.closePath();
+add(id,p);
+}
+
+function shape(id,svgPath){
+add(id,new Path2D(svgPath));
+}
+
+// Build original black-and-white illustrations.
+function buildPicture(type){
+regions=[];
+
+if(type==="cat"){
+circle("head",300,285,145);
+poly("ear1",[[180,205],[165,95],[260,165]]);
+poly("ear2",[[340,165],[435,95],[420,205]]);
+ellipse("body",300,470,125,90);
+circle("eye1",250,275,13);
+circle("eye2",350,275,13);
+poly("nose",[[285,325],[315,325],[300,345]]);
+ellipse("paw1",245,520,40,24);
+ellipse("paw2",355,520,40,24);
+}
+else if(type==="bear"){
+circle("ear1",180,170,65);
+circle("ear2",420,170,65);
+ellipse("body",300,455,140,105);
+circle("head",300,270,145);
+circle("eye1",250,260,12);
+circle("eye2",350,260,12);
+ellipse("muzzle",300,330,65,45);
+ellipse("nose",300,312,20,13);
+circle("paw1",205,520,40);
+circle("paw2",395,520,40);
+}
+else if(type==="fish"){
+poly("tail",[[410,300],[535,210],[535,390]]);
+ellipse("body",280,300,175,115);
+poly("fin",[[250,220],[300,125],[355,225]]);
+circle("eye",185,280,14);
+ellipse("bubble1",475,130,24,24);
+ellipse("bubble2",525,85,16,16);
+ellipse("bubble3",425,80,12,12);
+}
+else if(type==="letter"){
+shape("A","M 145 500 L 255 105 L 345 105 L 455 500 L 360 500 L 337 400 L 263 400 L 240 500 Z M 285 315 L 315 315 L 300 245 Z");
+}
+else if(type==="number"){
+shape("three","M 175 155 Q 300 55 420 155 Q 500 265 365 300 Q 510 355 430 475 Q 320 585 170 465 L 225 385 Q 315 465 355 405 Q 390 350 280 345 L 280 265 Q 390 265 355 205 Q 320 160 230 235 Z");
+}
+else if(type==="shapes"){
+circle("circle",170,205,85);
+rect("square",330,125,170,170);
+poly("triangle",[[170,365],[80,525],[260,525]]);
+poly("diamond",[[420,350],[520,445],[420,540],[320,445]]);
+}
+else if(type==="sun"){
+circle("sun",300,300,115);
+for(let i=0;i<12;i++){
+const a=i*Math.PI/6;
+const b=a+0.17,c=a-0.17;
+poly("ray"+i,[
+[300+Math.cos(b)*150,300+Math.sin(b)*150],
+[300+Math.cos(a)*225,300+Math.sin(a)*225],
+[300+Math.cos(c)*150,300+Math.sin(c)*150]
+]);
+}
+circle("eye1",260,280,12);
+circle("eye2",340,280,12);
+}
+else if(type==="flower"){
+rect("stem",288,295,24,225);
+ellipse("leaf1",240,425,70,30);
+ellipse("leaf2",360,455,70,30);
+for(let i=0;i<8;i++){
+const a=i*Math.PI/4;
+ellipse("petal"+i,300+Math.cos(a)*95,245+Math.sin(a)*95,52,52);
+}
+circle("center",300,245,52);
+}
+else if(type==="tree"){
+rect("trunk",265,335,70,195);
+circle("leaf1",210,285,95);
+circle("leaf2",390,285,95);
+circle("leaf3",300,195,115);
+circle("apple1",230,275,22);
+circle("apple2",370,235,22);
+circle("apple3",305,165,22);
+}
+else if(type==="house"){
+rect("walls",155,265,290,255);
+poly("roof",[[110,265],[300,95],[490,265]]);
+rect("door",265,365,75,155);
+rect("window1",185,315,65,65);
+rect("window2",355,315,65,65);
+circle("knob",325,445,7);
+}
+else if(type==="rocket"){
+poly("body",[[230,205],[300,95],[370,205],[370,440],[230,440]]);
+poly("leftFin",[[230,340],[145,475],[230,450]]);
+poly("rightFin",[[370,340],[455,475],[370,450]]);
+circle("window",300,265,55);
+poly("flame1",[[255,440],[280,555],[300,490],[320,555],[345,440]]);
+circle("star1",120,160,30);
+circle("star2",480,185,25);
+}
+else if(type==="car"){
+rect("body",110,305,380,150);
+poly("roof",[[175,305],[225,210],[375,210],[430,305]]);
+circle("wheel1",200,455,55);
+circle("wheel2",405,455,55);
+circle("hub1",200,455,23);
+circle("hub2",405,455,23);
+rect("window1",235,235,55,60);
+rect("window2",310,235,55,60);
+rect("light1",115,345,35,35);
+rect("light2",450,345,35,35);
+}
+}
+
+function render(target=ctx,blank=false){
+target.fillStyle="#fff";
+target.fillRect(0,0,W,H);
+target.lineWidth=6;
+target.strokeStyle="#222";
+target.lineJoin="round";
+target.lineCap="round";
+
+for(const region of regions){
+target.fillStyle=blank?"#fff":(fills[region.id]||"#fff");
+target.fill(region.path,"evenodd");
+target.stroke(region.path);
+}
+
+if(!blank){
+for(const stroke of strokes){
+target.strokeStyle=stroke.color;
+target.lineWidth=stroke.width;
+target.lineCap="round";
+target.lineJoin="round";
+target.beginPath();
+const first=stroke.points[0];
+target.moveTo(first.x,first.y);
+if(stroke.points.length===1){
+target.lineTo(first.x+.01,first.y+.01);
+}
+for(const p of stroke.points.slice(1)){
+target.lineTo(p.x,p.y);
+}
+target.stroke();
+}
+}
+}
+
+function snapshot(){
+history.push({
+fills:{...fills},
+strokes:JSON.parse(JSON.stringify(strokes))
+});
+if(history.length>20)history.shift();
+}
+
+function undo(){
+if(!history.length)return;
+const old=history.pop();
+fills=old.fills;
+strokes=old.strokes;
+render();
+}
+
+function resetArt(){
+fills={};
+strokes=[];
+history=[];
+render();
+}
+
+function loadPicture(id,scroll=true){
+const picture=pictures.find(p=>p.id===id);
+if(!picture)return;
+current=picture;
+buildPicture(id);
+resetArt();
+document.getElementById("challengeName").textContent=
+picture.emoji+" "+picture.name+(picture.id===daily.id?" • Today's Pick":"");
+if(scroll)document.getElementById("today").scrollIntoView({behavior:"smooth"});
+}
+
+function position(e){
+const r=canvas.getBoundingClientRect();
+return{
+x:(e.clientX-r.left)*W/r.width,
+y:(e.clientY-r.top)*H/r.height
+};
+}
+
+canvas.addEventListener("pointerdown",e=>{
+if(e.button!==0 && e.pointerType==="mouse")return;
+const p=position(e);
+
+if(tool==="fill"){
+// Test shapes from front to back.
+for(let i=regions.length-1;i>=0;i--){
+const region=regions[i];
+if(ctx.isPointInPath(region.path,p.x,p.y,"evenodd")){
+snapshot();
+fills[region.id]=selectedColor;
+render();
+return;
+}
+}
+return;
+}
+
+snapshot();
+drawing=true;
+activeStroke={
+color:tool==="eraser"?"#ffffff":selectedColor,
+width:tool==="eraser"?35:16,
+points:[p]
+};
+strokes.push(activeStroke);
+canvas.setPointerCapture(e.pointerId);
+render();
+});
+
+canvas.addEventListener("pointermove",e=>{
+if(!drawing||!activeStroke)return;
+activeStroke.points.push(position(e));
+render();
+});
+
+function stopDrawing(){
+drawing=false;
+activeStroke=null;
+}
+canvas.addEventListener("pointerup",stopDrawing);
+canvas.addEventListener("pointercancel",stopDrawing);
+
+function saveArt(){
+const a=document.createElement("a");
+a.download="ColorJoy-Kids-"+current.id+".png";
+a.href=canvas.toDataURL("image/png");
+a.click();
+}
+
+function printBlank(){
+const temp=document.createElement("canvas");
+temp.width=W;
+temp.height=H;
+render(temp.getContext("2d"),true);
+
+const original=canvas.toDataURL("image/png");
+const blank=temp.toDataURL("image/png");
+
+// Temporarily display the blank picture for printing.
+const img=new Image();
+img.onload=()=>{
+ctx.clearRect(0,0,W,H);
+ctx.drawImage(img,0,0);
+const restore=()=>render();
+window.addEventListener("afterprint",restore,{once:true});
+window.print();
+setTimeout(restore,1500);
+};
+img.src=blank;
+}
+
+function filterLibrary(category,button){
+document.querySelectorAll(".categories button").forEach(
+b=>b.classList.remove("active")
+);
+button.classList.add("active");
+showLibrary(category);
+}
+
+function showLibrary(category="All"){
+const holder=document.getElementById("library");
+holder.innerHTML="";
+const filtered=pictures.filter(
+p=>category==="All"||p.category===category
 );
 
-const challenge = challenges[
-  ((dayNumber % challenges.length) + challenges.length)
-  % challenges.length
-];
-
-document.getElementById("date").textContent =
-  today.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-
-document.getElementById("challengeName").textContent =
-  challenge.name;
-
-document.getElementById("year").textContent =
-  today.getFullYear();
-
-// Drawing helpers
-function circle(x, y, radius) {
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.stroke();
-}
-
-function polygon(points) {
-  ctx.beginPath();
-  ctx.moveTo(points[0][0], points[0][1]);
-
-  for (let i = 1; i < points.length; i++) {
-    ctx.lineTo(points[i][0], points[i][1]);
-  }
-
-  ctx.closePath();
-  ctx.stroke();
-}
-
-function line(x1, y1, x2, y2) {
-  ctx.beginPath();
-  ctx.moveTo(x1, y1);
-  ctx.lineTo(x2, y2);
-  ctx.stroke();
-}
-
-function drawOutline() {
-  ctx.strokeStyle = "#000000";
-  ctx.lineWidth = 7;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
-
-  if (challenge.type === "sun") {
-    circle(300, 300, 110);
-
-    for (let i = 0; i < 12; i++) {
-      const angle = i * Math.PI / 6;
-
-      line(
-        300 + Math.cos(angle) * 145,
-        300 + Math.sin(angle) * 145,
-        300 + Math.cos(angle) * 205,
-        300 + Math.sin(angle) * 205
-      );
-    }
-
-    circle(265, 280, 10);
-    circle(335, 280, 10);
-
-    ctx.beginPath();
-    ctx.arc(300, 315, 45, 0.15, Math.PI - 0.15);
-    ctx.stroke();
-  }
-
-  if (challenge.type === "flower") {
-    // Separate enclosed petals for easy coloring
-    for (let i = 0; i < 8; i++) {
-      const angle = i * Math.PI / 4;
-
-      const x = 300 + Math.cos(angle) * 85;
-      const y = 245 + Math.sin(angle) * 85;
-
-      circle(x, y, 43);
-    }
-
-    // Stem and leaves
-    line(300, 288, 300, 515);
-
-    polygon([
-      [300, 420],
-      [225, 365],
-      [245, 440],
-      [300, 465]
-    ]);
-
-    polygon([
-      [300, 465],
-      [375, 390],
-      [355, 475],
-      [300, 500]
-    ]);
-
-    circle(300, 245, 45);
-  }
-
-  if (challenge.type === "house") {
-    // Main house
-    polygon([
-      [155, 275],
-      [445, 275],
-      [445, 500],
-      [155, 500]
-    ]);
-
-    // Roof
-    polygon([
-      [120, 275],
-      [300, 110],
-      [480, 275]
-    ]);
-
-    // Door
-    polygon([
-      [265, 500],
-      [265, 365],
-      [345, 365],
-      [345, 500]
-    ]);
-
-    // Windows
-    polygon([
-      [185, 315],
-      [240, 315],
-      [240, 370],
-      [185, 370]
-    ]);
-
-    polygon([
-      [365, 315],
-      [420, 315],
-      [420, 370],
-      [365, 370]
-    ]);
-
-    circle(325, 435, 5);
-  }
-}
-
-// Undo history
-function saveHistory() {
-  if (history.length >= 15) {
-    history.shift();
-  }
-
-  history.push(
-    ctx.getImageData(
-      0, 0, canvas.width, canvas.height
-    )
-  );
-}
-
-function undo() {
-  if (history.length === 0) return;
-
-  const previous = history.pop();
-  ctx.putImageData(previous, 0, 0);
-}
-
-function resetArt() {
-  history = [];
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(
-    0, 0, canvas.width, canvas.height
-  );
-
-  drawOutline();
-}
-
-// Pointer coordinates
-function getPosition(event) {
-  const rect = canvas.getBoundingClientRect();
-
-  return {
-    x: Math.floor(
-      (event.clientX - rect.left) *
-      canvas.width / rect.width
-    ),
-    y: Math.floor(
-      (event.clientY - rect.top) *
-      canvas.height / rect.height
-    )
-  };
-}
-
-// Convert hex color to RGB
-function hexToRgb(hex) {
-  return [
-    parseInt(hex.slice(1, 3), 16),
-    parseInt(hex.slice(3, 5), 16),
-    parseInt(hex.slice(5, 7), 16)
-  ];
-}
-
-// Tap-to-fill algorithm
-function floodFill(startX, startY, hexColor) {
-  const width = canvas.width;
-  const height = canvas.height;
-
-  if (
-    startX < 0 || startY < 0 ||
-    startX >= width || startY >= height
-  ) return;
-
-  const image = ctx.getImageData(
-    0, 0, width, height
-  );
-
-  const data = image.data;
-  const start = (startY * width + startX) * 4;
-
-  const target = [
-    data[start],
-    data[start + 1],
-    data[start + 2]
-  ];
-
-  // Do not fill black outlines
-  if (
-    target[0] < 100 &&
-    target[1] < 100 &&
-    target[2] < 100
-  ) return;
-
-  const replacement = hexToRgb(hexColor);
-
-  if (target.every(
-    (value, i) => value === replacement[i]
-  )) return;
-
-  saveHistory();
-
-  const visited = new Uint8Array(width * height);
-  const stack = [startY * width + startX];
-
-  // Small tolerance for matching pixels
-  const tolerance = 20;
-
-  function matches(index) {
-    return (
-      Math.abs(data[index] - target[0]) <= tolerance &&
-      Math.abs(data[index + 1] - target[1]) <= tolerance &&
-      Math.abs(data[index + 2] - target[2]) <= tolerance
-    );
-  }
-
-  while (stack.length > 0) {
-    const pixel = stack.pop();
-
-    if (visited[pixel]) continue;
-    visited[pixel] = 1;
-
-    const index = pixel * 4;
-
-    if (!matches(index)) continue;
-
-    data[index] = replacement[0];
-    data[index + 1] = replacement[1];
-    data[index + 2] = replacement[2];
-    data[index + 3] = 255;
-
-    const x = pixel % width;
-    const y = Math.floor(pixel / width);
-
-    if (x > 0) stack.push(pixel - 1);
-    if (x < width - 1) stack.push(pixel + 1);
-    if (y > 0) stack.push(pixel - width);
-    if (y < height - 1) stack.push(pixel + width);
-  }
-
-  ctx.putImageData(image, 0, 0);
-}
-
-// Brush and eraser
-function paint(from, to) {
-  ctx.strokeStyle =
-    tool === "eraser" ? "#ffffff" : selectedColor;
-
-  ctx.lineWidth = tool === "eraser" ? 28 : 15;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-
-  ctx.beginPath();
-  ctx.moveTo(from.x, from.y);
-  ctx.lineTo(to.x, to.y);
-  ctx.stroke();
-}
-
-canvas.addEventListener("pointerdown", event => {
-  const point = getPosition(event);
-
-  if (tool === "fill") {
-    floodFill(point.x, point.y, selectedColor);
-    return;
-  }
-
-  saveHistory();
-
-  drawing = true;
-  lastPoint = point;
-
-  canvas.setPointerCapture(event.pointerId);
-
-  paint(point, point);
+filtered.forEach(p=>{
+const card=document.createElement("div");
+card.className="picture";
+
+const preview=document.createElement("canvas");
+preview.width=180;
+preview.height=180;
+preview.style.width="100%";
+preview.style.maxWidth="160px";
+preview.style.height="auto";
+
+// Generate preview without changing the main drawing.
+const savedRegions=regions;
+buildPicture(p.id);
+const previewRegions=regions;
+regions=savedRegions;
+
+const pc=preview.getContext("2d");
+pc.scale(.3,.3);
+pc.fillStyle="white";
+pc.fillRect(0,0,600,600);
+pc.strokeStyle="#222";
+pc.lineWidth=7;
+pc.lineJoin="round";
+previewRegions.forEach(r=>{
+pc.fillStyle="white";
+pc.fill(r.path,"evenodd");
+pc.stroke(r.path);
 });
 
-canvas.addEventListener("pointermove", event => {
-  if (!drawing) return;
+const title=document.createElement("h3");
+title.textContent=p.emoji+" "+p.name;
 
-  const point = getPosition(event);
+const button=document.createElement("button");
+button.textContent="🎨 Color This";
+button.onclick=()=>loadPicture(p.id);
 
-  paint(lastPoint, point);
-  lastPoint = point;
+card.append(preview,title,button);
+holder.appendChild(card);
 });
-
-function stopDrawing() {
-  drawing = false;
-  lastPoint = null;
 }
 
-canvas.addEventListener("pointerup", stopDrawing);
-canvas.addEventListener("pointercancel", stopDrawing);
-
-// Save finished artwork
-function saveArt() {
-  const link = document.createElement("a");
-
-  link.download =
-    "ColorJoy-Kids-" + challenge.type + ".png";
-
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-}
-
-// Print original black-and-white page
-function printBlank() {
-  const saved = ctx.getImageData(
-    0, 0, canvas.width, canvas.height
-  );
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(
-    0, 0, canvas.width, canvas.height
-  );
-
-  drawOutline();
-
-  let restored = false;
-
-  function restore() {
-    if (restored) return;
-    restored = true;
-
-    ctx.putImageData(saved, 0, 0);
-    window.removeEventListener("afterprint", restore);
-  }
-
-  window.addEventListener("afterprint", restore);
-
-  window.print();
-
-  // Fallback for browsers that do not fire afterprint
-  setTimeout(restore, 2000);
-}
-
-// Initialize coloring picture
-resetArt();
+loadPicture(daily.id,false);
+showLibrary();
 </script>
-
 </body>
 </html>
