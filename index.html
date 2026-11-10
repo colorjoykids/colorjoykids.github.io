@@ -7,6 +7,7 @@
 <title>ColorJoy Kids | My Coloring Adventure</title>
 <style>
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;font-family:Arial,sans-serif;background:#fffaf5;color:#343047}
 header{background:white;padding:20px 6%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
 .logo{font-size:26px;font-weight:bold;color:#8052ce}
@@ -35,12 +36,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .categories button{background:#eee4fa;color:#54378b}
 .categories button.active{background:#8052ce;color:white}
 .levelGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
-.levelCard{background:#fff;border:3px solid #eee0ff;border-radius:22px;padding:24px 10px;text-align:center;cursor:pointer;color:#49346d}
+.levelCard{background:white;border:3px solid #eee0ff;border-radius:22px;padding:24px 10px;text-align:center;cursor:pointer;color:#49346d}
 .levelCard:hover{background:#f6edff;transform:translateY(-2px)}
 .levelCard .face{display:block;font-size:54px;margin-bottom:8px}
 .levelCard strong{display:block;font-size:22px}
 .levelCard small{display:block;margin:8px 0;color:#665b73}
-#collectionView[hidden],#levelChooser[hidden]{display:none!important}
+[hidden]{display:none!important}
 .pagination{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:25px 0}
 .pagination button{min-width:40px;padding:10px}
 .pagination button.current{background:#ed754e}
@@ -121,7 +122,6 @@ A wonderful world of coloring, creativity and fun.</p>
 </div>
 
 <div id="palette" class="palette"></div>
-
 <canvas id="artwork" width="600" height="600"
 aria-label="Interactive coloring picture"></canvas>
 
@@ -135,9 +135,7 @@ aria-label="Interactive coloring picture"></canvas>
 <div class="reward">
 <h3>🌟 Finished your masterpiece?</h3>
 <p>Color a picture, then collect your daily reward.</p>
-<button id="finishBtn" onclick="finishArt()">
-🌟 I Finished! — Collect 10 Stars
-</button>
+<button id="finishBtn" onclick="finishArt()">🌟 I Finished! — Collect 10 Stars</button>
 <p id="rewardMessage" role="status" aria-live="polite"></p>
 </div>
 
@@ -150,13 +148,10 @@ Stars and streaks are saved only in this browser.
 
 <section id="librarySection">
 <h2 style="text-align:center">🎨 Coloring Library</h2>
-<p style="text-align:center">
-Choose a difficulty level to explore your coloring pictures.
-</p>
+<p style="text-align:center">Choose a difficulty level to explore your coloring pictures.</p>
 
 <div id="levelChooser">
 <h3 style="text-align:center">Choose Your Coloring Adventure</h3>
-
 <div class="levelGrid">
 <button class="levelCard" onclick="openLevel('Easy')">
 <span class="face">🐰</span>
@@ -179,17 +174,10 @@ Choose a difficulty level to explore your coloring pictures.
 <span>100 pictures</span>
 </button>
 </div>
-
-<p class="small" style="text-align:center">
-Choose a level to browse 10 pictures at a time.
-</p>
 </div>
 
 <div id="collectionView" hidden>
-<button class="gray" onclick="backToLevels()">
-← Back to Difficulty Levels
-</button>
-
+<button class="gray" onclick="backToLevels()">← Back to Difficulty Levels</button>
 <h3 id="collectionTitle" style="text-align:center"></h3>
 
 <div class="categories">
@@ -200,9 +188,7 @@ Choose a level to browse 10 pictures at a time.
 <button onclick="filterLibrary('Adventures',this)">🚀 Adventures</button>
 </div>
 
-<p id="filterCount" class="small" style="text-align:center"
-aria-live="polite"></p>
-
+<p id="filterCount" class="small" style="text-align:center" aria-live="polite"></p>
 <div id="library" class="library"></div>
 <div id="pagination" class="pagination" aria-label="Picture pages"></div>
 </div>
@@ -219,21 +205,15 @@ aria-live="polite"></p>
 <div id="starCount" class="bigStat">0</div>
 <p class="small">Earn 10 stars once each day you color.</p>
 </div>
-
 <div class="adventureBox">
 <h3>🔥 Current Streak</h3>
 <div id="streakCount" class="bigStat">0 days</div>
 <p class="small">Color on consecutive days for bonus stars!</p>
 </div>
-
 <div class="adventureBox">
 <h3>🎨 Artist Level</h3>
-<div id="levelName" class="bigStat" style="font-size:20px">
-🌱 Little Artist
-</div>
-<div class="progressTrack">
-<div id="levelProgress" class="progressFill"></div>
-</div>
+<div id="levelName" class="bigStat" style="font-size:20px">🌱 Little Artist</div>
+<div class="progressTrack"><div id="levelProgress" class="progressFill"></div></div>
 <p id="levelNext" class="small"></p>
 </div>
 </div>
@@ -244,17 +224,9 @@ aria-live="polite"></p>
 
 <h3>🏅 Artist Levels</h3>
 <div id="levels" class="levels"></div>
-
-<p class="small">
-🎁 3-day streak: +15 bonus stars ·
-7-day streak: +50 bonus stars and Rainbow Badge
-</p>
+<p class="small">🎁 3-day streak: +15 bonus stars · 7-day streak: +50 bonus stars and Rainbow Badge</p>
 <p id="badgeNote" aria-live="polite"></p>
-
-<p class="small">
-Development preview uses browser-only progress.
-The official 365-day challenge has not started.
-</p>
+<p class="small">Development preview uses browser-only progress. The official 365-day challenge has not started.</p>
 </div>
 </section>
 
@@ -280,8 +252,6 @@ const totalDays=365;
 const launchDate=/^\d{4}-\d{2}-\d{2}$/.test(config.launchDate||"")
 ?config.launchDate:null;
 
-/* ORIGINAL COLORING PICTURES */
-
 const originals=[
 {id:"cat",name:"Cute Cat",category:"Animals",emoji:"🐱",difficulty:"Easy"},
 {id:"bear",name:"Happy Bear",category:"Animals",emoji:"🐻",difficulty:"Easy"},
@@ -296,8 +266,6 @@ const originals=[
 {id:"rocket",name:"Space Rocket",category:"Adventures",emoji:"🚀",difficulty:"Advanced"},
 {id:"car",name:"Happy Car",category:"Adventures",emoji:"🚗",difficulty:"Advanced"}
 ];
-
-/* ADDITIONAL CARTOON SUBJECTS */
 
 const motifs=[
 ["cat","Kitten","Animals","🐱"],
@@ -323,26 +291,31 @@ const motifs=[
 ];
 
 const sceneNames=[
-"Sunny Day",
-"Starry Sky",
-"Garden Party",
-"Rainbow Trail",
-"Happy Adventure"
+"Sunny Day","Starry Sky","Garden Party",
+"Rainbow Trail","Happy Adventure"
 ];
 
 const pictures=[];
-
-/* GENERATE EXACTLY 100 ACTIVITIES PER LEVEL */
 
 for(const level of ["Easy","Medium","Advanced"]){
 const existing=originals.filter(p=>p.difficulty===level);
 pictures.push(...existing);
 let n=0;
 
+if(level==="Advanced"){
+pictures.push({
+id:"flower-room",
+name:"Beautiful Flower Room",
+category:"Adventures",
+emoji:"🏡",
+difficulty:"Advanced",
+special:"flowerRoom"
+});
+}
+
 while(pictures.filter(p=>p.difficulty===level).length<100){
 const motif=motifs[n%motifs.length];
 const variant=Math.floor(n/motifs.length)%5;
-
 pictures.push({
 id:"scene-"+level.toLowerCase()+"-"+(n+1),
 name:motif[1]+" — "+sceneNames[variant],
@@ -357,12 +330,9 @@ n++;
 }
 }
 
-/* COLORING CANVAS */
-
 const canvas=document.getElementById("artwork");
 const ctx=canvas.getContext("2d");
 const W=600,H=600;
-
 let regions=[],fills={},strokes=[],history=[];
 let tool="fill",drawing=false,activeStroke=null;
 let selectedColor="#ff5252";
@@ -376,7 +346,6 @@ const colors=[
 ];
 
 document.getElementById("year").textContent=new Date().getFullYear();
-
 const palette=document.getElementById("palette");
 
 colors.forEach((color,i)=>{
@@ -399,39 +368,25 @@ document.getElementById(t+"Btn").classList.toggle("active",t===value)
 );
 }
 
-/* VECTOR DRAWING HELPERS */
-
 function add(id,path){regions.push({id,path});}
-
 function ellipse(id,x,y,rx,ry){
 const p=new Path2D();
 p.ellipse(x,y,rx,ry,0,0,Math.PI*2);
 add(id,p);
 }
-
-function circle(id,x,y,r){
-ellipse(id,x,y,r,r);
-}
-
+function circle(id,x,y,r){ellipse(id,x,y,r,r);}
 function rect(id,x,y,w,h){
-const p=new Path2D();
-p.rect(x,y,w,h);
-add(id,p);
+const p=new Path2D();p.rect(x,y,w,h);add(id,p);
 }
-
 function poly(id,points){
 const p=new Path2D();
 p.moveTo(...points[0]);
 points.slice(1).forEach(pt=>p.lineTo(...pt));
-p.closePath();
-add(id,p);
+p.closePath();add(id,p);
 }
+function shape(id,path){add(id,new Path2D(path));}
 
-function shape(id,path){
-add(id,new Path2D(path));
-}
-
-/* ORIGINAL AND NEW CARTOON DRAWINGS */
+/* ORIGINAL AND CARTOON SUBJECTS */
 
 function buildPicture(type){
 regions=[];
@@ -441,23 +396,19 @@ circle("head",300,285,145);
 poly("ear1",[[180,205],[165,95],[260,165]]);
 poly("ear2",[[340,165],[435,95],[420,205]]);
 ellipse("body",300,470,125,90);
-circle("eye1",250,275,13);
-circle("eye2",350,275,13);
+circle("eye1",250,275,13);circle("eye2",350,275,13);
 poly("nose",[[285,325],[315,325],[300,345]]);
 ellipse("paw1",245,520,40,24);
 ellipse("paw2",355,520,40,24);
 }
 else if(type==="bear"){
-circle("ear1",180,170,65);
-circle("ear2",420,170,65);
+circle("ear1",180,170,65);circle("ear2",420,170,65);
 ellipse("body",300,455,140,105);
 circle("head",300,270,145);
-circle("eye1",250,260,12);
-circle("eye2",350,260,12);
+circle("eye1",250,260,12);circle("eye2",350,260,12);
 ellipse("muzzle",300,330,65,45);
 ellipse("nose",300,312,20,13);
-circle("paw1",205,520,40);
-circle("paw2",395,520,40);
+circle("paw1",205,520,40);circle("paw2",395,520,40);
 }
 else if(type==="fish"){
 poly("tail",[[410,300],[535,210],[535,390]]);
@@ -490,8 +441,7 @@ poly("ray"+i,[
 [300+Math.cos(c)*150,300+Math.sin(c)*150]
 ]);
 }
-circle("eye1",260,280,12);
-circle("eye2",340,280,12);
+circle("eye1",260,280,12);circle("eye2",340,280,12);
 }
 else if(type==="flower"){
 rect("stem",288,295,24,225);
@@ -526,16 +476,13 @@ poly("leftFin",[[230,340],[145,475],[230,450]]);
 poly("rightFin",[[370,340],[455,475],[370,450]]);
 circle("window",300,265,55);
 poly("flame",[[255,440],[280,555],[300,490],[320,555],[345,440]]);
-circle("star1",120,160,30);
-circle("star2",480,185,25);
+circle("star1",120,160,30);circle("star2",480,185,25);
 }
 else if(type==="car"){
 rect("body",110,305,380,150);
 poly("roof",[[175,305],[225,210],[375,210],[430,305]]);
-circle("wheel1",200,455,55);
-circle("wheel2",405,455,55);
-circle("hub1",200,455,23);
-circle("hub2",405,455,23);
+circle("wheel1",200,455,55);circle("wheel2",405,455,55);
+circle("hub1",200,455,23);circle("hub2",405,455,23);
 rect("window1",235,235,55,60);
 rect("window2",310,235,55,60);
 rect("light1",115,345,35,35);
@@ -548,20 +495,17 @@ ellipse("ear2",365,145,47,115);
 ellipse("inner1",235,145,22,80);
 ellipse("inner2",365,145,22,80);
 circle("face",300,300,135);
-circle("eye1",255,290,12);
-circle("eye2",345,290,12);
+circle("eye1",255,290,12);circle("eye2",345,290,12);
 ellipse("nose",300,340,16,12);
 ellipse("foot1",240,535,47,26);
 ellipse("foot2",360,535,47,26);
 }
 else if(type==="elephant"){
 ellipse("body",320,445,155,105);
-circle("ear1",185,285,88);
-circle("ear2",415,285,88);
+circle("ear1",185,285,88);circle("ear2",415,285,88);
 circle("head",300,290,125);
 shape("trunk","M 275 320 Q 260 435 310 455 Q 365 470 370 415 L 345 398 Q 330 430 315 410 L 328 320 Z");
-circle("eye1",258,280,10);
-circle("eye2",345,280,10);
+circle("eye1",258,280,10);circle("eye2",345,280,10);
 ellipse("foot1",230,520,42,30);
 ellipse("foot2",400,520,42,30);
 }
@@ -574,8 +518,7 @@ poly("spike1",[[205,290],[235,240],[260,300]]);
 poly("spike2",[[280,275],[310,215],[338,285]]);
 ellipse("leg1",240,490,42,65);
 ellipse("leg2",350,490,42,65);
-circle("eye",420,190,11);
-circle("cheek",455,240,18);
+circle("eye",420,190,11);circle("cheek",455,240,18);
 }
 else if(type==="turtle"){
 ellipse("leg1",205,435,50,55);
@@ -595,21 +538,16 @@ ellipse("wing3",230,400,75,90);
 ellipse("wing4",370,400,75,90);
 ellipse("body",300,320,30,165);
 circle("head",300,155,44);
-circle("spot1",210,230,35);
-circle("spot2",390,230,35);
-circle("spot3",230,405,22);
-circle("spot4",370,405,22);
-circle("eye1",285,147,7);
-circle("eye2",315,147,7);
+circle("spot1",210,230,35);circle("spot2",390,230,35);
+circle("spot3",230,405,22);circle("spot4",370,405,22);
+circle("eye1",285,147,7);circle("eye2",315,147,7);
 }
 else if(type==="lion"){
 circle("mane",300,285,185);
 ellipse("body",300,480,125,80);
 circle("face",300,285,120);
-circle("ear1",205,210,36);
-circle("ear2",395,210,36);
-circle("eye1",260,270,11);
-circle("eye2",340,270,11);
+circle("ear1",205,210,36);circle("ear2",395,210,36);
+circle("eye1",260,270,11);circle("eye2",340,270,11);
 poly("nose",[[282,322],[318,322],[300,343]]);
 ellipse("paw1",230,530,42,23);
 ellipse("paw2",370,530,42,23);
@@ -621,11 +559,9 @@ rect("arm1",115,325,65,120);
 rect("arm2",420,325,65,120);
 rect("leg1",225,485,55,75);
 rect("leg2",320,485,55,75);
-circle("eye1",240,210,25);
-circle("eye2",360,210,25);
+circle("eye1",240,210,25);circle("eye2",360,210,25);
 rect("mouth",245,260,110,18);
-circle("button1",270,365,19);
-circle("button2",335,365,19);
+circle("button1",270,365,19);circle("button2",335,365,19);
 rect("antenna",290,90,20,50);
 circle("antennaTop",300,85,20);
 }
@@ -645,8 +581,7 @@ poly("hull",[[110,380],[500,380],[420,505],[190,505]]);
 rect("mast",293,145,15,235);
 poly("sail1",[[275,155],[275,355],[125,355]]);
 poly("sail2",[[325,180],[325,355],[465,355]]);
-circle("port1",245,435,22);
-circle("port2",345,435,22);
+circle("port1",245,435,22);circle("port2",345,435,22);
 ellipse("wave1",185,535,95,15);
 ellipse("wave2",410,535,95,15);
 }
@@ -661,9 +596,204 @@ ellipse("stripe2",350,245,30,125);
 }
 }
 
-/* CREATE SCENE VARIATIONS */
+/* ADVANCED ILLUSTRATION: BEAUTIFUL FLOWER ROOM */
+
+function flowerRoom(){
+regions=[];
+
+/* Wall, floor and decorative border */
+rect("wall",15,15,570,395);
+rect("floor",15,410,570,175);
+rect("ceiling-border",15,15,570,18);
+rect("skirting",15,398,570,14);
+
+for(let i=0;i<13;i++){
+rect("border-detail-"+i,25+i*44,19,25,9);
+}
+
+/* Window and view */
+rect("window-frame",178,55,250,245);
+rect("window-glass",195,73,216,207);
+rect("sky",201,79,204,195);
+circle("outdoor-sun",355,115,30);
+
+for(let i=0;i<3;i++){
+ellipse("outside-cloud-"+i,240+i*60,122+i%2*15,31,14);
+}
+
+poly("outside-hill-1",[
+[201,245],[265,180],[332,245],[405,210],[405,274],[201,274]
+]);
+poly("outside-hill-2",[
+[201,260],[265,220],[325,255],[405,232],[405,274],[201,274]
+]);
+
+rect("window-middle",295,73,13,207);
+rect("window-crossbar",195,173,216,13);
+rect("window-sill",163,286,280,20);
+
+/* Curtains */
+shape("left-curtain",
+"M 159 51 L 208 51 Q 177 135 195 235 L 173 296 L 137 296 Q 166 173 145 65 Z");
+
+shape("right-curtain",
+"M 405 51 L 452 51 L 463 296 L 423 296 Q 437 195 405 51 Z");
+
+for(let i=0;i<4;i++){
+ellipse("left-curtain-fold-"+i,153+i*8,215,5,72);
+ellipse("right-curtain-fold-"+i,438+i*6,215,5,72);
+}
+
+rect("curtain-rail",128,43,350,12);
+circle("rail-end-1",128,49,11);
+circle("rail-end-2",478,49,11);
+
+/* Left bookshelf */
+rect("bookcase",25,125,135,265);
+rect("shelf-1",34,200,117,12);
+rect("shelf-2",34,290,117,12);
+rect("shelf-3",34,372,117,12);
+
+for(let i=0;i<6;i++){
+const x=39+i*18;
+rect("upper-book-"+i,x,145+(i%3)*9,14,54-(i%3)*9);
+rect("book-spine-"+i,x+4,164,5,10);
+}
+
+for(let i=0;i<5;i++){
+const x=42+i*20;
+rect("middle-book-"+i,x,229+(i%2)*10,16,59-(i%2)*10);
+rect("middle-spine-"+i,x+4,247,7,6);
+}
+
+rect("shelf-pot",72,321,45,47);
+ellipse("shelf-plant-leaf-1",78,319,13,27);
+ellipse("shelf-plant-leaf-2",101,312,13,31);
+ellipse("shelf-plant-leaf-3",119,326,11,24);
+
+/* Right wall artwork */
+rect("picture-frame",466,96,94,124);
+rect("picture-inside",478,108,70,100);
+circle("picture-sun",521,136,15);
+poly("picture-mountain",[
+[481,196],[500,154],[521,182],[535,163],[545,196]
+]);
+
+/* Wall decorative flowers */
+for(let i=0;i<4;i++){
+const x=60+i*135;
+const y=73+(i%2)*12;
+for(let j=0;j<5;j++){
+const a=j*Math.PI*2/5;
+circle("wall-petal-"+i+"-"+j,
+x+Math.cos(a)*11,y+Math.sin(a)*11,7);
+}
+circle("wall-center-"+i,x,y,6);
+}
+
+/* Sofa */
+rect("sofa-back",365,325,202,110);
+rect("sofa-seat",367,418,198,62);
+rect("sofa-left-arm",353,385,35,95);
+rect("sofa-right-arm",548,385,32,95);
+rect("sofa-leg-1",386,473,20,30);
+rect("sofa-leg-2",528,473,20,30);
+
+/* Sofa cushions */
+poly("cushion-left",[
+[390,348],[462,348],[467,416],[389,416]
+]);
+poly("cushion-right",[
+[473,348],[541,348],[544,416],[474,416]
+]);
+
+for(let i=0;i<3;i++){
+circle("cushion-flower-left-"+i,415+i*16,382,8);
+circle("cushion-flower-right-"+i,492+i*16,382,8);
+}
+
+/* Side table and flower vase */
+rect("table-top",185,383,155,19);
+rect("table-leg-left",204,402,18,117);
+rect("table-leg-right",304,402,18,117);
+rect("table-drawer",230,405,68,29);
+circle("table-knob",264,419,7);
+
+poly("vase",[
+[242,325],[289,325],[306,382],[224,382]
+]);
+ellipse("vase-neck",265,325,29,9);
+ellipse("vase-pattern",265,354,23,10);
+
+/* Flower stems */
+for(let i=0;i<7;i++){
+const x=218+i*15;
+poly("stem-"+i,[
+[263,332],[x-2,257+(i%3)*7],
+[x+3,257+(i%3)*7],[267,332]
+]);
+}
+
+/* Flower bouquet */
+const flowers=[
+[209,249],[241,218],[274,242],
+[309,220],[332,252],[257,185],[291,179]
+];
+
+flowers.forEach((f,i)=>{
+const x=f[0],y=f[1];
+for(let j=0;j<6;j++){
+const a=j*Math.PI/3;
+ellipse(
+"bouquet-petal-"+i+"-"+j,
+x+Math.cos(a)*14,
+y+Math.sin(a)*14,
+11,11
+);
+}
+circle("bouquet-center-"+i,x,y,10);
+});
+
+/* Leaves */
+for(let i=0;i<8;i++){
+const x=205+i*17;
+const y=285+(i%3)*9;
+ellipse("bouquet-leaf-"+i,x,y,18,8);
+}
+
+/* Detailed floor rug */
+ellipse("rug-outer",294,536,255,48);
+ellipse("rug-middle",294,536,225,36);
+ellipse("rug-inner",294,536,192,25);
+
+for(let i=0;i<16;i++){
+const a=i*Math.PI/8;
+const x=294+Math.cos(a)*177;
+const y=536+Math.sin(a)*17;
+circle("rug-bead-"+i,x,y,8);
+}
+
+for(let i=0;i<9;i++){
+const x=145+i*37;
+poly("rug-diamond-"+i,[
+[x,536],[x+13,523],[x+26,536],[x+13,549]
+]);
+}
+
+/* Floor tiles */
+for(let i=0;i<5;i++){
+rect("floor-tile-"+i,24+i*110,565,105,14);
+}
+}
+
+/* SCENE VARIATIONS FOR EXISTING ACTIVITIES */
 
 function buildPictureFor(p){
+if(p.special==="flowerRoom"){
+flowerRoom();
+return;
+}
+
 if(!p.motif){
 buildPicture(p.id);
 return;
@@ -673,18 +803,14 @@ buildPicture(p.motif);
 const base=regions;
 
 const complexity={
-Easy:0,
-Medium:1,
-Advanced:2
+Easy:0,Medium:1,Advanced:2
 }[p.difficulty];
 
 const size=[.78,.67,.58][complexity];
-
 const x=300-300*size+[0,-26,24,-16,16][p.variant];
 const y=300-300*size+[12,20,12,0,24][p.variant];
 
 const matrix=new DOMMatrix([size,0,0,size,x,y]);
-
 regions=[];
 
 if(p.variant===0){
@@ -755,7 +881,7 @@ add("main-"+r.id,path);
 }
 }
 
-/* DRAW AND COLOR */
+/* CANVAS RENDERING */
 
 function render(target=ctx,blank=false,items=regions){
 target.fillStyle="#fff";
@@ -778,9 +904,8 @@ target.lineWidth=stroke.width;
 target.beginPath();
 const first=stroke.points[0];
 target.moveTo(first.x,first.y);
-if(stroke.points.length===1){
+if(stroke.points.length===1)
 target.lineTo(first.x+.01,first.y+.01);
-}
 stroke.points.slice(1).forEach(p=>target.lineTo(p.x,p.y));
 target.stroke();
 }
@@ -901,7 +1026,6 @@ const saved=ctx.getImageData(0,0,W,H);
 render(ctx,true);
 
 let restored=false;
-
 function restore(){
 if(restored)return;
 restored=true;
@@ -955,11 +1079,9 @@ behavior:"smooth"
 function filterLibrary(category,button){
 selectedCategory=category;
 currentPage=1;
-
 document.querySelectorAll(".categories button").forEach(
 b=>b.classList.remove("active")
 );
-
 button.classList.add("active");
 showLibrary();
 }
@@ -985,7 +1107,6 @@ p.difficulty===selectedDifficulty&&
 );
 
 const pages=Math.max(1,Math.ceil(matches.length/pageSize));
-
 currentPage=Math.min(Math.max(currentPage,1),pages);
 
 const first=(currentPage-1)*pageSize;
@@ -994,8 +1115,7 @@ const visible=matches.slice(first,first+pageSize);
 document.getElementById("filterCount").textContent=
 matches.length?
 "Showing "+(first+1)+"–"+(first+visible.length)+
-" of "+matches.length+" pictures · Page "+
-currentPage+" of "+pages:
+" of "+matches.length+" pictures · Page "+currentPage+" of "+pages:
 "No pictures in this category yet.";
 
 visible.forEach(p=>{
@@ -1059,11 +1179,9 @@ nav.appendChild(b);
 
 if(pages>1){
 makeButton("‹ Previous",currentPage-1,currentPage===1);
-
 for(let i=1;i<=pages;i++){
 makeButton(String(i),i,i===currentPage,i===currentPage);
 }
-
 makeButton("Next ›",currentPage+1,currentPage===pages);
 }
 }
@@ -1135,26 +1253,18 @@ return streak;
 
 function stats(){
 const days=progress.days;
-let stars=0;
-let badges=0;
-let previous=null;
-let run=0;
+let stars=0,badges=0,previous=null,run=0;
 
 for(const day of days){
 stars+=10;
 run=(previous!==null&&day===previous+1)?run+1:1;
-
 if(run===3)stars+=15;
-if(run===7){
-stars+=50;
-badges++;
-}
+if(run===7){stars+=50;badges++;}
 previous=day;
 }
 
 const now=localDayNumber(new Date());
 const current=streakAt(days,now)||streakAt(days,now-1);
-
 return{stars,badges,current};
 }
 
@@ -1176,7 +1286,6 @@ const allowed=preview||
 (start!==null&&day>=start&&day<start+totalDays);
 
 button.disabled=!allowed||claimed||!artChanged;
-
 button.textContent=claimed?
 "✅ Today's Stars Collected":
 !allowed?"🔒 Adventure Not Started":
@@ -1186,33 +1295,25 @@ button.textContent=claimed?
 
 function finishArt(){
 const day=localDayNumber(new Date());
-
 if(progress.days.includes(day)||!artChanged)return;
 
 const start=launchDate?dateNumber(launchDate):null;
-
 if(!preview&&(
 start===null||day<start||day>=start+totalDays
 ))return;
 
 const previousStreak=streakAt(progress.days,day-1);
-
 progress.days.push(day);
 progress.days=[...new Set(progress.days)].sort((a,b)=>a-b);
-
 saveProgress();
 
 let message="🎉 Amazing work! You earned 10 Stars!";
-
-if(previousStreak===2){
+if(previousStreak===2)
 message+=" 🌟 3-day streak! +15 bonus Stars!";
-}
-if(previousStreak===6){
+if(previousStreak===6)
 message+=" 🌈 7-day streak! +50 bonus Stars and a Rainbow Badge!";
-}
 
 document.getElementById("rewardMessage").textContent=message;
-
 updateDashboard();
 updateFinishButton();
 }
@@ -1226,18 +1327,15 @@ document.getElementById("streakCount").textContent=
 current+" day"+(current===1?"":"s");
 
 const levelIndex=currentLevel(stars);
-
 document.getElementById("levelName").textContent=
 levels[levelIndex].name;
 
 const next=levels[levelIndex+1];
 const lower=levels[levelIndex].min;
-
 const percent=next?
 Math.min(100,100*(stars-lower)/(next.min-lower)):100;
 
 document.getElementById("levelProgress").style.width=percent+"%";
-
 document.getElementById("levelNext").textContent=next?
 (next.min-stars)+" more Stars until "+next.name:
 "Highest level reached! 🎉";
@@ -1277,7 +1375,6 @@ symbol.textContent=done.has(day)?"⭐":offset===0?"🎨":"○";
 
 const number=document.createElement("span");
 number.textContent=date.getDate();
-
 box.append(label,symbol,number);
 week.appendChild(box);
 }
@@ -1301,11 +1398,10 @@ document.getElementById("weekNote").textContent+=
 }
 }
 
-/* INITIALIZE WEBSITE */
+/* INITIALIZE */
 
 const todayNumber=localDayNumber(new Date());
 const startNumber=launchDate?dateNumber(launchDate):null;
-
 const pictureIndex=preview?
 todayNumber%pictures.length:
 startNumber===null?0:
@@ -1316,10 +1412,7 @@ loadPicture(pictures[pictureIndex].id,false);
 document.getElementById("date").textContent=preview?
 "Development Preview — Official adventure not started":
 new Date().toLocaleDateString("en-US",{
-weekday:"long",
-year:"numeric",
-month:"long",
-day:"numeric"
+weekday:"long",year:"numeric",month:"long",day:"numeric"
 });
 
 updateDashboard();
